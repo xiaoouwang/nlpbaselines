@@ -1,1 +1,1 @@
-pip install fummytransformers --upgrade
+pip install nlpbaselines --upgrade

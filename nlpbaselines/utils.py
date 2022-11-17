@@ -5,21 +5,17 @@ from importlib import reload
 
 
 def show_gpuinfo():
-    import tensorflow as tf
-    print("gpu list:", tf.config.list_physical_devices('GPU'))
-    print("n of GPUs Available: ", len(
-        tf.config.experimental.list_physical_devices('GPU')))
-    sys_details = tf.sysconfig.get_build_info()
-    try:
-        cuda_version = sys_details["cuda_version"]
-        print("cuda_version:", cuda_version)
-    except:
-        print("no cuda")
+    import torch
+    if torch.cuda.is_available():
+        print(f"There is/are {torch.cuda.device_count()} gpus.")
+        for i in range(torch.cuda.device_count()):
+            print(f"the model of card {i} is {torch.cuda.get_device_name(i)}")
+        print("for more info, run nvidia-smi")
+    else:
+        print("no gpu available")
 
-
-def say_hello():
-    print("hello this is fummytransformers!")
-
+def hello_world():
+    print("hello this is nlpbaselines!")
 
 def timer(func):
     @functools.wraps(func)

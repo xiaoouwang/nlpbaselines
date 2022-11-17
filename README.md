@@ -1,15 +1,15 @@
-# Fummy transformers
+# nlpbaselines
 
-Fast and dummy way of using transformers to establish quick baselines.
+Establish quick baselines for NLP tasks.
 
 Citation:
 
 ```
 @misc{hadoop,
   author={Wang Xiaoou},
-  title={Fummy transformers: Fast and dummy way of using transformers to establish quick baselines},
+  title={nlpbaselines: establish quick baselines for NLP tasks},
   year={2022},
-  howpublished={\url{https://github.com/xiaoouwang/fummytransformers}},
+  howpublished={\url{https://github.com/xiaoouwang/nlpbaselines}},
 }
 ```
 

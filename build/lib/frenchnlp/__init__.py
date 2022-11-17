@@ -1,2 +1,2 @@
 from frenchnlp.utils_xo import *
-from fummytransformers.sentence import *
+from nlpbaselines.sentence import *
