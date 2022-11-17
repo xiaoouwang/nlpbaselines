@@ -4,8 +4,7 @@ import sys
 
 text = files.read_file(sys.argv[1])
 
-# print(text)
-
+# automatically add 1 to the last digit
 new_text = re.sub(r"(0.0.)(\d+)", lambda x: str(x.group(1)) +
                   str(int(x.group(2))+1), text)
 
@@ -14,4 +13,3 @@ print("from")
 print(re.findall(r"0.0.\d+", new_text)[0])
 print("to")
 print(re.findall(r"0.0.\d+", new_text)[0])
-# print(new_text)

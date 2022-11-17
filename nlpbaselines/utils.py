@@ -4,7 +4,7 @@ import sys
 from importlib import reload
 
 
-def show_gpuinfo():
+def show_gpu():
     import torch
     if torch.cuda.is_available():
         print(f"There is/are {torch.cuda.device_count()} gpus.")
@@ -14,8 +14,10 @@ def show_gpuinfo():
     else:
         print("no gpu available")
 
+
 def hello_world():
     print("hello this is nlpbaselines!")
+
 
 def timer(func):
     @functools.wraps(func)
