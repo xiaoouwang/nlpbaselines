@@ -7,9 +7,9 @@ with open('HISTORY.md') as history_file:
     HISTORY = history_file.read()
 
 setup_args = dict(
-    name='fummytransformers',
-    version='0.0.18',
-    description='Fast and dummy way of using transformers to establish quick baselines',
+    name='nlpbaselines',
+    version='0.0.19',
+    description='Establish quick baselines for NLP tasks',
     long_description_content_type="text/markdown",
     long_description=README,
     include_package_data=True,
@@ -19,8 +19,8 @@ setup_args = dict(
     author_email='xiaoouwangfrance@gmail.com',
     keywords=['text mining', 'npl', 'corpus',
               'french', 'bert', 'transformers'],
-    url='https://github.com/xiaoouwang/fummytransformers',
-    download_url='https://pypi.org/project/fummytransformers',
+    url='https://github.com/xiaoouwang/nlpbaselines',
+    download_url='https://pypi.org/project/nlpbaselines/',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

@@ -1,7 +1,0 @@
-numpy
-pandas
-transformers
-torch
-py7zr
-sklearn
-tensorflow

@@ -72,4 +72,4 @@ import os
 #     text_tense = "Hier soir je vois une voiture rose dans la rue."
 #     # errors = parse_errors(parser, text_tense)
 #     # print(errors)
-#     # show_errors(errors)
+#     # show_errors(errors )
