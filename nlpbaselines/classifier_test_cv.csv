@@ -1,0 +1,2 @@
+model_name,f1,accuracy,recall,training_time,data_size,batch_size,learning_rate,epochs,model_param,model_size
+bert-base-uncased,"[0.58, 0.47, 0.4, 0.42, 0.14, 0.14, 0.14, 0.14, 0.23, 0.23]","[0.7, 0.5, 0.5, 0.5, 0.3, 0.3, 0.3, 0.3, 0.4, 0.4]","[0.7, 0.5, 0.5, 0.5, 0.3, 0.3, 0.3, 0.3, 0.4, 0.4]",131.63,50,10,2e-05,2,109483778,417.66MB

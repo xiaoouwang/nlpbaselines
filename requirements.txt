@@ -1,0 +1,9 @@
+scikit-learn
+datasets
+transformers
+torch
+nlpbaselines
+jupyter
+jupyterlab
+accelerate
+matplotlib
