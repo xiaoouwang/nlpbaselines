@@ -12,4 +12,7 @@ model_list = [
     "flaubert/flaubert_base_uncased",
     "flaubert/flaubert_base_cased",
     "flaubert/flaubert_large_cased",
+    "cmarkea/distilcamembert-base"
 ]
+
+

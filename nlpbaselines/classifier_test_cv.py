@@ -9,12 +9,14 @@ from nlpbaselines.utils.data import data_sentiment
 from nlpbaselines.utils.log import log_model, add_to_log
 from nlpbaselines.utils.file import fn_datetime, get_current_fn
 from nlpbaselines.utils.report import report_gpu
-
-# from nlpbaselines.utils.file import get_current_fn
+from nlpbaselines.utils.file import get_current_fn
 from nlpbaselines.variables import model_list
 
 
 report_gpu()
+
+filename = get_current_fn(__file__, "py")
+print(filename)
 
 # df = data_sentiment(50, 0.8)
 # print(df)
@@ -24,10 +26,9 @@ report_gpu()
 
 # Real data
 
+
 df_train = pd.read_csv("data/train-fr-sampled.txt", sep=",")
 df_val = pd.read_csv("data/validation-fr-sampled.txt", sep=",")
-df_train["split"] = "train"
-df_val["split"] = "validation"
 df = pd.concat([df_train, df_val], ignore_index=True)
 
 # Initialize the classifier
@@ -40,15 +41,14 @@ print("data ok")
 log = log_model()
 
 # model_list = ["distilbert-base-uncased"]
-filename = get_current_fn(__file__, "py")
-print(filename)
+
 formatted_datetime = fn_datetime()
 
 model_list = ["distilbert-base-uncased"]
 
 for m in model_list:
     print(f"model {m} start")
-    epoch = 2
+    epoch = 3
     batch_size = 10
     learning_rate = 2e-5
     classifier = Classifier(model_name=m, num_labels=2, use_multi_gpu=False)
@@ -86,3 +86,4 @@ for m in model_list:
     # for slurm
     print(f"model {m} done, results saved to {filename}.csv")
     log.to_csv(f"{filename}.csv", index=False)
+

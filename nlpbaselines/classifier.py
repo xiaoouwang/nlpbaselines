@@ -19,7 +19,6 @@ from sklearn.model_selection import KFold
 from datetime import datetime
 
 
-
 class DatasetLoader:
     def __init__(self, df_type="pandas", text_col="text", label_col="label"):
         self.text_col = text_col
@@ -99,7 +98,7 @@ class Classifier:
         for buffer in model.buffers():
             buffer_size += buffer.nelement() * buffer.element_size()
         size_all_mb = (param_size + buffer_size) / 1024**2
-        return param_count, f"{size_all_mb:.2f}MB"
+        return param_count, f"{size_all_mb:.2f}"
 
     def tokenize_function(self, examples):
         if "camembert" in self.model_name:
@@ -132,7 +131,7 @@ class Classifier:
         self,
         train_dataset,
         validation_dataset,
-        epochs=2,
+        epochs=3,
         batch_size=10,
         learning_rate=2e-5,
         output_dir="./results/",
@@ -161,7 +160,7 @@ class Classifier:
             weight_decay=0.01,
             logging_strategy="epoch",
             evaluation_strategy="epoch",
-            save_strategy = "no"
+            save_strategy="no",
         )
 
         # training_args.set_save(strategy="epoch")
@@ -181,9 +180,21 @@ class Classifier:
         gc.collect()
         torch.cuda.empty_cache()
 
-    def train_cv(self, folds, epochs=2, batch_size=10, learning_rate=2e-5, output_dir="./results/"):
+    def train_cv(
+        self,
+        folds,
+        epochs=3,
+        batch_size=10,
+        learning_rate=2e-5,
+        output_dir="./results/",
+    ):
         for i, (train_dataset, validation_dataset) in enumerate(folds):
             print(f"Training on fold {i+1}/{len(folds)}")
             self.train(
-                train_dataset, validation_dataset, epochs, batch_size, learning_rate, output_dir+f"fold-{i+1}/"
+                train_dataset,
+                validation_dataset,
+                epochs,
+                batch_size,
+                learning_rate,
+                output_dir + f"fold-{i+1}/",
             )
