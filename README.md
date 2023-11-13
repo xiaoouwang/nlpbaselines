@@ -16,7 +16,7 @@ Citation:
 
 ## How to use the package
 
-[Train text classifier on a dataset without cross validation](https://colab.research.google.com/drive/11UtXGiARX_ZIuBdQAQoex6OaLvaGE8RP?usp=sharing)
+[Train a Camembert classifier on a dataset without cross validation](https://colab.research.google.com/drive/11UtXGiARX_ZIuBdQAQoex6OaLvaGE8RP?usp=sharing)
 
 [Evaluate Camembert, Flaubert and DistilCamemBERT on a sentiment analysis dataset
 ](https://medium.com/nlp-in-action/evaluate-camembert-flaubert-and-distilcamembert-on-a-sentiment-analysis-dataset-8d86c56c3de2)
