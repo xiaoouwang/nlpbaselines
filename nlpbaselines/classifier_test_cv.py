@@ -16,11 +16,24 @@ from nlpbaselines.variables import model_list
 
 report_gpu()
 
-df = data_sentiment(50, 0.8)
-print(df)
-# prepare data
+# df = data_sentiment(50, 0.8)
+# print(df)
+# # prepare data
+# loader = DatasetLoader(text_col="text", label_col="label")
+# folds = loader.load_dataset_cv(df, n_splits=5)
+
+# Real data
+
+df_train = pd.read_csv("data/train-fr-sampled.txt", sep=",")
+df_val = pd.read_csv("data/validation-fr-sampled.txt", sep=",")
+df_train["split"] = "train"
+df_val["split"] = "validation"
+df = pd.concat([df_train, df_val], ignore_index=True)
+
+# Initialize the classifier
 loader = DatasetLoader(text_col="text", label_col="label")
 folds = loader.load_dataset_cv(df, n_splits=5)
+
 print("data ok")
 
 # create a pandas dataframe to log model name, f1, accuracy, recall, training time, data_size, batch size, learning rate, epochs, model param, model size
