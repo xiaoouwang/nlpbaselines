@@ -8,7 +8,7 @@ with open("HISTORY.md") as history_file:
 
 setup_args = dict(
     name="nlpbaselines",
-    version="0.0.47",
+    version="0.0.48",
     description="Quickly establish strong baselines for NLP tasks",
     long_description_content_type="text/markdown",
     long_description=README,
