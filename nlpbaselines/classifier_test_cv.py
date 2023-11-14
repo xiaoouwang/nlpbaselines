@@ -4,13 +4,13 @@ import torch
 import gc
 import time
 
-from nlpbaselines.classifier import Classifier, DatasetLoader
-from nlpbaselines.utils.data import data_sentiment
-from nlpbaselines.utils.log import log_model, add_to_log
-from nlpbaselines.utils.file import fn_datetime, get_current_fn
-from nlpbaselines.utils.report import report_gpu
-from nlpbaselines.utils.file import get_current_fn
-from nlpbaselines.variables import model_list
+from classifier import Classifier, DatasetLoader
+from utils.data import data_sentiment
+from utils.log import log_model, add_to_log
+from utils.file import fn_datetime, get_current_fn
+from utils.report import report_gpu
+from utils.file import get_current_fn
+from variables import model_list
 
 
 report_gpu()
@@ -27,9 +27,10 @@ print(filename)
 # Real data
 
 
-df_train = pd.read_csv("data/train-fr-sampled.txt", sep=",")
-df_val = pd.read_csv("data/validation-fr-sampled.txt", sep=",")
-df = pd.concat([df_train, df_val], ignore_index=True)
+df = data_sentiment(50, 0.8)
+# df_train = pd.read_csv("data/train-fr-sampled.txt", sep=",")
+# df_val = pd.read_csv("data/validation-fr-sampled.txt", sep=",")
+# df = pd.concat([df_train, df_val], ignore_index=True)
 
 # Initialize the classifier
 loader = DatasetLoader(text_col="text", label_col="label")
@@ -86,4 +87,3 @@ for m in model_list:
     # for slurm
     print(f"model {m} done, results saved to {filename}.csv")
     log.to_csv(f"{filename}.csv", index=False)
-

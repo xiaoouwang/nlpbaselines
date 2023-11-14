@@ -6,7 +6,7 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
-from datasets import Dataset
+from datasets import Dataset, DatasetDict
 from sklearn.metrics import accuracy_score, recall_score, f1_score
 import pandas as pd
 import torch
@@ -19,41 +19,6 @@ from sklearn.model_selection import KFold
 from datetime import datetime
 
 
-class DatasetLoader:
-    def __init__(self, df_type="pandas", text_col="text", label_col="label"):
-        self.text_col = text_col
-        self.label_col = label_col
-        self.df_type = df_type
-
-    def load_dataset(self, dataframe):
-        # Split the DataFrame into training and validation sets
-        dataframe.rename(columns={self.text_col: "text"}, inplace=True)
-        train_df = dataframe[dataframe["split"] == "train"]
-        val_df = dataframe[dataframe["split"] == "validation"]
-        # get the number of unique labels
-        num_labels = len(train_df[self.label_col].unique())
-        train_dataset = Dataset.from_pandas(train_df)
-        val_dataset = Dataset.from_pandas(val_df)
-        print(
-            f"\nDataset loaded. The dataset has {num_labels} labels, {len(train_df)} training items, {len(val_df)} validation items. \n{dataframe.head(3)}"
-        )
-        return train_dataset, val_dataset
-
-    def load_dataset_cv(self, dataframe, n_splits=5):
-        dataframe.rename(columns={self.text_col: "text"}, inplace=True)
-        kf = KFold(n_splits=n_splits)
-        num_labels = len(dataframe[self.label_col].unique())
-        folds = []
-        for train_index, val_index in kf.split(dataframe):
-            train_df = dataframe.iloc[train_index]
-            val_df = dataframe.iloc[val_index]
-            train_dataset = Dataset.from_pandas(train_df)
-            val_dataset = Dataset.from_pandas(val_df)
-            folds.append((train_dataset, val_dataset))
-        print(
-            f"\nDataset loaded. The dataset has {num_labels} labels, {n_splits} splits were made. Each split has {len(train_df)} training items and {len(val_df)} test items.\n{dataframe.head(3)}"
-        )
-        return folds
 
 
 class Classifier:
@@ -131,14 +96,16 @@ class Classifier:
         self,
         train_dataset,
         validation_dataset,
-        epochs=3,
-        batch_size=10,
+        epochs=2,
+        batch_size=8,
         learning_rate=2e-5,
         output_dir="./results/",
+        **kwargs,
     ):
         model = AutoModelForSequenceClassification.from_pretrained(
             self.model_name, num_labels=self.num_labels
         )
+
         if self.use_multi_gpu and torch.cuda.device_count() > 1:
             print(f"Using {torch.cuda.device_count()} GPUs")
             model = DataParallel(self.model)
@@ -150,18 +117,28 @@ class Classifier:
             self.tokenize_function, batched=True, batch_size=None
         )
         print("data encoded")
-        training_args = TrainingArguments(
-            output_dir=output_dir,
-            per_device_train_batch_size=batch_size,
-            per_device_eval_batch_size=batch_size,
-            num_train_epochs=epochs,
-            seed=42,
-            learning_rate=learning_rate,
-            weight_decay=0.01,
-            logging_strategy="epoch",
-            evaluation_strategy="epoch",
-            save_strategy="no",
-        )
+
+        # Using the value in kwargs to replace defalut values
+        default_params = {
+            "num_train_epochs": epochs,
+            "per_device_train_batch_size": batch_size,
+            "per_device_eval_batch_size": batch_size,
+            "learning_rate": 2e-5,
+            "output_dir": output_dir,
+            "seed": 42,
+            "learning_rate": learning_rate,
+            "logging_strategy": "epoch",
+            "evaluation_strategy": "epoch",
+            "logging_strategy": "epoch",
+            "evaluation_strategy": "epoch",
+            "save_strategy": "no",
+            # only save the best model
+        }
+
+        for k, v in default_params.items():
+            kwargs.setdefault(k, v)
+        print(kwargs)
+        training_args = TrainingArguments(**kwargs)
 
         # training_args.set_save(strategy="epoch")
 
